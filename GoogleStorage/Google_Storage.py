@@ -35,7 +35,7 @@ class GoogleStorage:
             self.CREDENTIALS_JSON)
         return discovery.build('storage', 'v1', credentials=credentials)
 
-    def upload_object(self, file_path, file_name=None, predefinedAcl='authenticatedRead', 
+    def upload_object(self, file_path, name=None, predefinedAcl='authenticatedRead', 
                 readers=[], owners=[]):
         """
             upload object: pass file path to upload into GCS.
@@ -49,8 +49,6 @@ class GoogleStorage:
         service = self.__create_service()
         # This is the request body as specified:
         # http://g.co/cloud/storage/docs/json_api/v1/objects/insert#request
-        if not name:
-            name = filename
         body = {
             'name': name,
             'predefinedAcl': predefinedAcl,
@@ -80,7 +78,7 @@ class GoogleStorage:
         # Now insert them into the specified bucket as a media insertion.
 
         # http://g.co/dev/resources/api-libraries/documentation/storage/v1/python/latest/storage_v1.objects.html#insert
-        with open(filename, 'rb') as f:
+        with open(file_path, 'rb') as f:
             req = service.objects().insert(name=name, predefinedAcl=predefinedAcl,
                                            bucket=self.BUCKET_NAME, media_body=http.MediaIoBaseUpload(f, 'application/octet-stream'))
             # You can also just set media_body=filename, but for the sake of
