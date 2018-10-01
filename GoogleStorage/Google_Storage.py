@@ -8,7 +8,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 class GoogleStorage:
-    def __init__(self, credentials_path, bucket_name=None):
+    def __init__(self, bucket_name, credentials_path):
         """
             Initiate Google Storage by passing two arugments[Credentials path]
             @credentials_path: path navigating Google Auth JSON file.
